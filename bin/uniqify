@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+"""
+A much faster `sort -u`
+"""
+
 import sys
 
 s = set()
