@@ -1,0 +1,8 @@
+#!/usr/bin/python
+
+import sys
+
+which_col = int(sys.argv[1])
+
+for line in sys.stdin:
+	print line.rstrip("\r\n").split()[which_col]

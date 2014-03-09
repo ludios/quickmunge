@@ -1,0 +1,14 @@
+#!/usr/bin/python
+
+import sys
+
+# By Fred Cirera, via https://stackoverflow.com/questions/1094841/reusable-library-to-get-human-readable-version-of-file-size
+def sizeof_fmt(num):
+	for x in ['bytes','KB','MB','GB','TB']:
+		if num < 1024.0:
+			return "%3.1f %s" % (num, x)
+		num /= 1024.0
+
+for line in sys.stdin:
+	size = int(line.strip())
+	print sizeof_fmt(size)
