@@ -1,0 +1,36 @@
+#!/usr/bin/python -i
+
+"""
+Example:
+
+$ interactive-sets /tmp/stats-bundles-kronos /tmp/stats-bundles-ambrosia
+s1: '/tmp/stats-bundles-kronos'... 2700 items
+s2: '/tmp/stats-bundles-ambrosia'... 2698 items
+>>> p(s1 - s2)
+2013-06-25_01-51-03.240253_650071.bz2
+2013-06-26_23-26-05.245684_944535.bz2
+"""
+
+import sys
+
+set_count = 0
+
+def get_lines(fname):
+   with open(fname, "rb") as f:
+      return f.read().splitlines()
+
+# Utility function for printing results
+def p(results):
+   if results:
+      print "\n".join(results)
+
+print "Lines have been loaded into sets with variable names:"
+
+for fname in sys.argv[1:]:
+   set_count += 1
+   vname = 's%d' % set_count
+   print "%s: %r..." % (vname, fname),
+   globals()[vname] = set(get_lines(fname))
+   print len(globals()[vname]), "items"
+
+print r'p(...) is shorthand for "\n".join(...)'
