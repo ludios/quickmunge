@@ -4,7 +4,7 @@
 Print out lines for which some Python 2.x lambda body returns a truthy value.
 The current line can be accessed with the variable "line".
 
-Examples:
+Example:
 
 filter-py2 "line.startswith('hi') and line.endswith('test')"
 """

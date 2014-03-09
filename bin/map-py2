@@ -6,7 +6,7 @@ None, the line will be skipped.
 
 The current line can be accessed with the variable "line".
 
-Examples:
+Example:
 
 map-py2 "json.loads(line).get('a')"
 """
