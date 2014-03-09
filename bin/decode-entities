@@ -30,8 +30,8 @@ def decode_entities(s):
 
 
 def main():
-	for s in sys.stdin:
-		print decode_entities(s.rstrip())
+	for line in sys.stdin:
+		print decode_entities(line.rstrip())
 
 
 if __name__ == '__main__':
