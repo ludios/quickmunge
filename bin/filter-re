@@ -1,9 +1,13 @@
 #!/usr/bin/python
 
+"""
+Print out lines that match a Python regexp.
+"""
+
 import sys
 import re
 
-regexp = re.compile(r'\A' + sys.argv[1] + r'\Z')
+regexp = re.compile(sys.argv[1])
 
 for line in sys.stdin:
 	line = line.rstrip("\r\n")
