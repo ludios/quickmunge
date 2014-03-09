@@ -9,7 +9,7 @@ import sys
 s = set()
 
 for line in sys.stdin:
-   s.add(line.rstrip("\r\n"))
+	s.add(line.rstrip("\r\n"))
 
 for item in s:
-   print item
+	print item
