@@ -1,0 +1,29 @@
+#!/usr/bin/python
+
+"""
+Transform lines with a Python 2.x lambda body.  If the lambda returns
+None, the line will be skipped.
+
+The current line can be accessed with the variable "line".
+
+Examples:
+
+map-py2 "json.loads(line).get('a')"
+"""
+
+# Import modules the user might want to use
+import sys
+import os
+import string
+import re
+import json
+import time
+import operator
+
+exec "line_map = lambda line: " + sys.argv[1]
+
+for line in sys.stdin:
+	line = line.rstrip("\r\n")
+	mapped = line_map(line)
+	if mapped is not None:
+		print mapped
