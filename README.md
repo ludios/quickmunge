@@ -4,6 +4,6 @@ The black sheep is `interactive-sets`, which loads from files instead.
 
 `decode-entities` requires BeautifulSoup 3.x.
 
-`lines-to-edn-vector` requires https://github.com/swaroopch/edn_format
+`json-to-edn` requires https://github.com/swaroopch/edn_format
 
 Everything else requires just Python 2.7.
