@@ -6,4 +6,6 @@ The black sheep is `interactive-sets`, which loads from files instead.
 
 `json-to-edn` requires https://github.com/swaroopch/edn_format
 
+`linkify` requires https://github.com/jsocol/bleach
+
 Everything else requires just Python 2.7.
