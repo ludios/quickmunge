@@ -1,0 +1,20 @@
+#!/usr/bin/python
+
+import sys
+
+print """\
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="referrer" content="never">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+<body>
+"""
+
+print sys.stdin.read()
+
+print """\
+</body>
+</html>"""

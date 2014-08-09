@@ -1,0 +1,11 @@
+#!/usr/bin/python
+
+import sys
+
+print """\
+<div style="white-space: pre-wrap">"""
+
+print sys.stdin.read()
+
+print """\
+</div>"""
