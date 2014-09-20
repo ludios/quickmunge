@@ -1,0 +1,24 @@
+#!/usr/bin/python
+
+"""
+Converts the first bencode item in stdin to JSON
+"""
+
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), "lib"))
+import bencode
+import json
+
+# Needed on Windows, else input newlines will be corrupted
+try:
+	import msvcrt
+except ImportError:
+	pass
+else:
+	msvcrt.setmode(sys.stdin.fileno(), os.O_BINARY)
+
+# Must use latin-1 because there are non-utf-8 bytestrings in there
+# We still output legal JSON, the Unicode escapes just represent bytes
+# instead of Unicode codepoints.
+print json.dumps(bencode.bdecode(sys.stdin.read()), encoding="latin-1")
