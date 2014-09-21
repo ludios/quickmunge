@@ -8,6 +8,7 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), "lib"))
 import bencode
+import collections
 import json
 
 # Needed on Windows, else output newlines will be corrupted
@@ -22,7 +23,8 @@ else:
 # "Unicode" strings, unfortunately.
 bencode.encode_func[unicode] = lambda x, r: bencode.encode_string(x.encode("latin-1"), r)
 
-# Must use latin-1 because there are non-utf-8 bytestrings in there
-# We still output legal JSON, the Unicode escapes just represent bytes
-# instead of Unicode codepoints.
-sys.stdout.write(bencode.bencode(json.loads(sys.stdin.read())))
+sys.stdout.write(
+	bencode.bencode(
+		json.loads(
+			sys.stdin.read(),
+			object_pairs_hook=collections.OrderedDict)))

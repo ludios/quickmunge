@@ -10,7 +10,11 @@
 
 # Written by Petru Paler
 
+# Modified for quickmunge by Ivan Kozik
+
 from BTL import BTFailure
+
+from collections import OrderedDict
 
 
 def decode_int(x, f):
@@ -40,7 +44,8 @@ def decode_list(x, f):
     return (r, f + 1)
 
 def decode_dict(x, f):
-    r, f = {}, f+1
+    r = OrderedDict()
+    f += 1
     while x[f] != 'e':
         k, f = decode_string(x, f)
         r[k], f = decode_func[x[f]](x, f)
@@ -103,9 +108,7 @@ def encode_list(x, r):
 
 def encode_dict(x,r):
     r.append('d')
-    ilist = x.items()
-    ilist.sort()
-    for k, v in ilist:
+    for k, v in x.iteritems():
         assert isinstance(k, basestring), k
         encode_func[type(k)](k, r)
         encode_func[type(v)](v, r)
@@ -119,6 +122,7 @@ encode_func[StringType] = encode_string
 encode_func[ListType] = encode_list
 encode_func[TupleType] = encode_list
 encode_func[DictType] = encode_dict
+encode_func[OrderedDict] = encode_dict
 
 try:
     from types import BooleanType
