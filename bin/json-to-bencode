@@ -19,9 +19,12 @@ except ImportError:
 else:
 	msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
 
+def encode_latin_1_unicode(x, r):
+	bencode.encode_string(x.encode("latin-1"), r)
+
 # This is the most convenient place to add support for our latin-1
 # "Unicode" strings, unfortunately.
-bencode.encode_func[unicode] = lambda x, r: bencode.encode_string(x.encode("latin-1"), r)
+bencode.encode_func[unicode] = encode_latin_1_unicode
 
 sys.stdout.write(
 	bencode.bencode(
