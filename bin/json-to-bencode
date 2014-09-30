@@ -6,7 +6,7 @@ Converts the first JSON item in stdin to bencode
 
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), "lib", "bencode"))
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "lib", "bencode"))
 import bencode
 import collections
 import json
@@ -26,8 +26,13 @@ def encode_latin_1_unicode(x, r):
 # "Unicode" strings, unfortunately.
 bencode.encode_func[unicode] = encode_latin_1_unicode
 
+if sys.argv[1:]:
+	f = open(sys.argv[1], "rb")
+else:
+	f = sys.stdin
+
 sys.stdout.write(
 	bencode.bencode(
 		json.loads(
-			sys.stdin.read(),
+			f.read(),
 			object_pairs_hook=collections.OrderedDict)))
