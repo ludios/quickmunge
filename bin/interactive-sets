@@ -16,8 +16,11 @@ import sys
 set_count = 0
 
 def get_lines(fname):
+	s = set()
 	with open(fname, "rb") as f:
-		return f.read().splitlines()
+		for line in f:
+			s.add(line.rstrip("\r\n"))
+	return s
 
 # Utility function for printing results
 def p(results):
@@ -30,7 +33,7 @@ for fname in sys.argv[1:]:
 	set_count += 1
 	vname = 's%d' % set_count
 	print "%s: %r..." % (vname, fname),
-	globals()[vname] = set(get_lines(fname))
+	globals()[vname] = get_lines(fname)
 	print len(globals()[vname]), "items"
 
 print r'p(...) is shorthand for "\n".join(...)'
