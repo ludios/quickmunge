@@ -1,0 +1,30 @@
+#!/usr/bin/python
+
+"""
+Example:
+
+$ munge-sets "s1 - s2" file1 file2
+"""
+
+import sys
+
+set_count = 0
+
+def get_lines(fname):
+	s = set()
+	with open(fname, "rb") as f:
+		for line in f:
+			s.add(line.rstrip("\r\n"))
+	return s
+
+code = sys.argv[1]
+
+for fname in sys.argv[2:]:
+	set_count += 1
+	vname = 's%d' % set_count
+	globals()[vname] = get_lines(fname)
+
+exec "out = " + code
+
+for item in out:
+	print item

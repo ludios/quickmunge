@@ -3,7 +3,7 @@
 """
 Example:
 
-$ interactive-sets /tmp/stats-bundles-kronos /tmp/stats-bundles-ambrosia
+$ munge-sets-interactively /tmp/stats-bundles-kronos /tmp/stats-bundles-ambrosia
 s1: '/tmp/stats-bundles-kronos'... 2700 items
 s2: '/tmp/stats-bundles-ambrosia'... 2698 items
 >>> p(s1 - s2)
