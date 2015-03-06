@@ -1,0 +1,12 @@
+#!/usr/bin/python
+
+import sys
+
+which_cols = map(int, sys.argv[1:])
+
+for line in sys.stdin:
+	out = []
+	split = line.rstrip("\r\n").split("\t")
+	for c in which_cols:
+		out.append(split[c])
+	print "\t".join(out)
