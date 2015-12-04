@@ -1,13 +1,1 @@
-#!/usr/bin/python
-
-import sys
-import cgi
-import bleach
-
-def escape_and_linkify(s):
-	if u"http://" in s or u"https://" in s:
-		return bleach.linkify(cgi.escape(s))
-	return cgi.escape(s)
-
-for line in sys.stdin:
-	print escape_and_linkify(line.rstrip("\r\n").decode("utf-8")).encode("utf-8")
+sed -r 's,\b((ftp|https?)://[^ ]+),<a href="\1">\1</a>,g'

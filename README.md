@@ -6,6 +6,6 @@ The black sheep are `munge-sets` and `munge-sets-interactively`, which load from
 
 `json-to-edn` requires https://github.com/swaroopch/edn_format
 
-`linkify` requires https://github.com/jsocol/bleach
+`linkify` requires `sed`
 
 Everything else requires just Python 2.7.
