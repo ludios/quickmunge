@@ -1,1 +1,3 @@
-sed -r 's,\b((ftp|https?)://[^ ]+),<a href="\1">\1</a>,g'
+#!/bin/sh
+
+exec sed -r 's,\b((ftp|https?)://[^ ]+),<a href="\1">\1</a>,g'
