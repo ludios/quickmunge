@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python -B
 
 """
 Transform lines with a Python 2.x lambda body.  If the lambda returns
