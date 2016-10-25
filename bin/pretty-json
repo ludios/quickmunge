@@ -7,5 +7,5 @@ Prettify some JSON input
 import sys
 import json
 
-j = json.loads(sys.stdin.read())
-print json.dumps(j, indent=2)
+j = json.load(sys.stdin)
+json.dump(j, sys.stdout, indent=2)
