@@ -1,0 +1,56 @@
+#!/usr/bin/python -S
+
+import re
+import sys
+import json
+
+try:
+	int_types = (int, long)
+except NameError:
+	int_types = int
+
+def main():
+	o = json.loads(sys.stdin.read())
+	gron(["json"], o)
+
+def gron(path, o):
+	if isinstance(o, dict):
+		print("%s = {};" % format_path(path))
+		for k in sorted(o):
+			gron(path + [k], o[k])
+	elif isinstance(o, list):
+		print("%s = [];" % format_path(path))
+		for n, v in enumerate(o):
+			gron(path + [n], v)
+	else:
+		print("%s = %s;" % (format_path(path), json.dumps(o)))
+
+def format_path(path):
+	out = ""
+	for n, seg in enumerate(path):
+		if can_leave_unquoted(seg):
+			dot = "." if n else ""
+			out += "%s%s" % (dot, seg)
+		else:
+			out += "[%s]" % json.dumps(seg)
+	return out
+
+identifier_re = re.compile(r"\A[_$A-Za-z][_$A-Za-z0-9]*\Z")
+reserved_words = set("""
+	break case catch class const continue debugger default delete do else export
+	extends false finally for function if import in instanceof new null return
+	super switch this throw true try typeof var void while with yield
+	""".split())
+
+def can_leave_unquoted(key):
+	if isinstance(key, int_types):
+		return False
+	elif key in reserved_words:
+		return False
+	elif re.match(identifier_re, key):
+		return True
+	else:
+		return False
+
+if __name__ == "__main__":
+	main()
