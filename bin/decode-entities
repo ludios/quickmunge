@@ -1,4 +1,4 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 """
 Decode HTML entities.  Lines are not allowed to contain HTML tags or angle
@@ -6,32 +6,20 @@ brackets.
 """
 
 import sys
-from BeautifulSoup import BeautifulSoup
-
-
-def unescape_xhtml(s):
-	htmlInput = '<html>' + s
-	# Livejournal stream has &apos; so we must use XHTML_ENTITIES
-	unescaped = BeautifulSoup(
-		htmlInput, convertEntities=BeautifulSoup.XHTML_ENTITIES
-	).contents[0].string
-	if not unescaped:
-		unescaped = u""
-	# Convert BeautifulSoup thing into a real str object
-	return unescaped.encode("utf-8")
+import html
 
 
 def decode_entities(s):
 	if '<' in s or '>' in s:
 		raise ValueError("Angle brackets are not allowed: %r" % (s,))
 	if '&' in s:
-		s = unescape_xhtml(s)
+		s = html.unescape(s)
 	return s
 
 
 def main():
 	for line in sys.stdin:
-		print decode_entities(line.rstrip())
+		print(decode_entities(line.rstrip()))
 
 
 if __name__ == '__main__':
