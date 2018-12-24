@@ -6,8 +6,7 @@ Converts the first JSON item in stdin to bencode
 
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "lib", "quickmunge", "bencode"))
-import bencode
+from quickmunge import bencode
 import collections
 import json
 
