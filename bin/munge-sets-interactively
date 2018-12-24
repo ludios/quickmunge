@@ -1,4 +1,4 @@
-#!/usr/bin/python -Bi
+#!/usr/bin/python3 -Bi
 
 """
 Example:
@@ -17,7 +17,7 @@ set_count = 0
 
 def get_lines(fname):
 	s = set()
-	with open(fname, "rb") as f:
+	with open(fname, "r") as f:
 		for line in f:
 			s.add(line.rstrip("\r\n"))
 	return s
@@ -25,15 +25,15 @@ def get_lines(fname):
 # Utility function for printing results
 def p(results):
 	if results:
-		print "\n".join(results)
+		print("\n".join(results))
 
-print "Lines have been loaded into sets with variable names:"
+print("Lines have been loaded into sets with variable names:")
 
 for fname in sys.argv[1:]:
 	set_count += 1
 	vname = 's%d' % set_count
-	print "%s: %r..." % (vname, fname),
+	print("%s: %r..." % (vname, fname), end=" ")
 	globals()[vname] = get_lines(fname)
-	print len(globals()[vname]), "items"
+	print(len(globals()[vname]), "items")
 
-print r'p(...) is shorthand for "\n".join(...)'
+print(r'p(...) is shorthand for "\n".join(...)')
