@@ -2,7 +2,7 @@
 
 import sys
 
-sum_col = int(sys.argv[1]) # which column to sum
+sum_col    = int(sys.argv[1])       # which column to sum
 group_cols = map(int, sys.argv[2:]) # which column(s) to use as unique id
 
 last_group = []
