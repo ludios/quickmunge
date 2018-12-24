@@ -1,4 +1,4 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 import sys
 
@@ -11,4 +11,4 @@ for line in sys.stdin:
 	except ValueError:
 		total += float(line)
 
-print total
+print(total)
