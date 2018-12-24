@@ -1,8 +1,8 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 import sys
 
-print """\
+print("""\
 <!doctype html>
 <html>
 <head>
@@ -11,10 +11,10 @@ print """\
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 </head>
 <body>
-"""
+""")
 
-print sys.stdin.read()
+print(sys.stdin.read())
 
-print """\
+print("""\
 </body>
-</html>"""
+</html>""")
