@@ -21,6 +21,6 @@ for line in sys.stdin:
 	elif s.endswith("E") or s.endswith("EB"):
 		mult = 1024 ** 6
 	if "." in s:
-		print int(float(re.findall(r"^[0-9\.]+", s)[0]) * mult)
+		print(int(float(re.findall(r"^[0-9\.]+", s)[0]) * mult))
 	else:
-		print int(re.findall("^[0-9]+", s)[0]) * mult
+		print(int(re.findall("^[0-9]+", s)[0]) * mult)
