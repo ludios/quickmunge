@@ -1,4 +1,4 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 """
 A much faster `sort -u`
@@ -12,4 +12,4 @@ for line in sys.stdin:
 	s.add(line.rstrip("\r\n"))
 
 for item in s:
-	print item
+	print(item)
