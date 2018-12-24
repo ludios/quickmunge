@@ -11,15 +11,15 @@ for line in sys.stdin:
 	if s.endswith("K") or s.endswith("KB"):
 		mult = 1024
 	elif s.endswith("M") or s.endswith("MB"):
-		mult = 1024 * 1024
+		mult = 1024 ** 2
 	elif s.endswith("G") or s.endswith("GB"):
-		mult = 1024 * 1024 * 1024
+		mult = 1024 ** 3
 	elif s.endswith("T") or s.endswith("TB"):
-		mult = 1024 * 1024 * 1024 * 1024
+		mult = 1024 ** 4
 	elif s.endswith("P") or s.endswith("PB"):
-		mult = 1024 * 1024 * 1024 * 1024 * 1024
+		mult = 1024 ** 5
 	elif s.endswith("E") or s.endswith("EB"):
-		mult = 1024 * 1024 * 1024 * 1024 * 1024 * 1024
+		mult = 1024 ** 6
 	if "." in s:
 		print int(float(re.findall(r"^[0-9\.]+", s)[0]) * mult)
 	else:
