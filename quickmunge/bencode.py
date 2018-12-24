@@ -12,9 +12,11 @@
 
 # Modified for quickmunge by Ivan Kozik
 
-from BTL import BTFailure
-
 from collections import OrderedDict
+
+
+class BTFailure(Exception):
+    pass
 
 
 def decode_int(x, f):
