@@ -8,7 +8,8 @@ for line in sys.stdin:
 	sp_i  = line.find(" ")
 	delim = "\t" if tab_i != -1 and (sp_i == -1 or tab_i < sp_i) else " "
 	parts = line.split(delim)
+	rest  = delim + delim.join(parts[1:])
 	try:
-		print format(int(parts[0]), ",d") + delim + delim.join(parts[1:])
+		print(format(int(parts[0]), ",d") + rest)
 	except ValueError:
-		print format(float(parts[0]), ",.10f") + delim + delim.join(parts[1:])
+		print(format(float(parts[0]), ",.10f") + rest)
