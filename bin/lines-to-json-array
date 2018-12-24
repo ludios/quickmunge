@@ -1,4 +1,4 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 """
 Put all lines in stdin into a JSON array
@@ -11,4 +11,4 @@ arr = []
 for line in sys.stdin:
 	line = line.rstrip("\r\n")
 	arr.append(line)
-print json.dumps(arr)
+print(json.dumps(arr))
