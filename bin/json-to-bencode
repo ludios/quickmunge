@@ -1,4 +1,4 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 """
 Converts the first JSON item in stdin to bencode
@@ -20,18 +20,18 @@ else:
 	msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
 
 def encode_latin_1_unicode(x, r):
-	bencode.encode_string(x.encode("latin-1"), r)
+	bencode.encode_bytes(x.encode("latin-1"), r)
 
 # This is the most convenient place to add support for our latin-1
 # "Unicode" strings, unfortunately.
-bencode.encode_func[unicode] = encode_latin_1_unicode
+bencode.encode_func[str] = encode_latin_1_unicode
 
 if sys.argv[1:]:
 	f = open(sys.argv[1], "rb")
 else:
-	f = sys.stdin
+	f = sys.stdin.buffer
 
-sys.stdout.write(
+sys.stdout.buffer.write(
 	bencode.bencode(
 		json.loads(
 			f.read(),

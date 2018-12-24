@@ -1,4 +1,4 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 """
 Converts the first bencode item in stdin to JSON
@@ -21,9 +21,6 @@ else:
 if sys.argv[1:]:
 	f = open(sys.argv[1], "rb")
 else:
-	f = sys.stdin
+	f = sys.stdin.buffer
 
-# Must use latin-1 because there are non-utf-8 bytestrings in there
-# We still output legal JSON, the Unicode escapes just represent bytes
-# instead of Unicode codepoints.
-print json.dumps(bencode.bdecode(f.read()), encoding="latin-1", indent=2)
+print(json.dumps(bencode.bdecode(f.read()), indent=2))

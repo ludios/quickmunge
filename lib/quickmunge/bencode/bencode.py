@@ -19,26 +19,32 @@ from collections import OrderedDict
 
 def decode_int(x, f):
     f += 1
-    newf = x.index('e', f)
+    newf = x.index(b"e", f)
     n = int(x[f:newf])
-    if x[f] == '-':
-        if x[f + 1] == '0':
+    if x[f] == 45: # "-"
+        if x[f + 1] == 48: # "0"
             raise ValueError
-    elif x[f] == '0' and newf != f+1:
+    elif x[f] == 48 and newf != f + 1:
         raise ValueError
-    return (n, newf+1)
+    return (n, newf + 1)
 
 def decode_string(x, f):
-    colon = x.index(':', f)
+    colon = x.index(b":", f)
     n = int(x[f:colon])
-    if x[f] == '0' and colon != f+1:
+    if x[f] == 48 and colon != f + 1:
         raise ValueError
     colon += 1
-    return (x[colon:colon+n], colon+n)
+
+    # Must use latin-1 to handle non-utf-8 bytestrings; Unicode codepoints
+    # represent bytes.
+    b = x[colon:colon + n]
+    s = b.decode("latin-1")
+
+    return (s, colon + n)
 
 def decode_list(x, f):
-    r, f = [], f+1
-    while x[f] != 'e':
+    r, f = [], f + 1
+    while x[f] != 101: # "e"
         v, f = decode_func[x[f]](x, f)
         r.append(v)
     return (r, f + 1)
@@ -46,25 +52,25 @@ def decode_list(x, f):
 def decode_dict(x, f):
     r = OrderedDict()
     f += 1
-    while x[f] != 'e':
+    while x[f] != 101: # "e"
         k, f = decode_string(x, f)
         r[k], f = decode_func[x[f]](x, f)
     return (r, f + 1)
 
 decode_func = {}
-decode_func['l'] = decode_list
-decode_func['d'] = decode_dict
-decode_func['i'] = decode_int
-decode_func['0'] = decode_string
-decode_func['1'] = decode_string
-decode_func['2'] = decode_string
-decode_func['3'] = decode_string
-decode_func['4'] = decode_string
-decode_func['5'] = decode_string
-decode_func['6'] = decode_string
-decode_func['7'] = decode_string
-decode_func['8'] = decode_string
-decode_func['9'] = decode_string
+decode_func[b"l"[0]] = decode_list
+decode_func[b"d"[0]] = decode_dict
+decode_func[b"i"[0]] = decode_int
+decode_func[b"0"[0]] = decode_string
+decode_func[b"1"[0]] = decode_string
+decode_func[b"2"[0]] = decode_string
+decode_func[b"3"[0]] = decode_string
+decode_func[b"4"[0]] = decode_string
+decode_func[b"5"[0]] = decode_string
+decode_func[b"6"[0]] = decode_string
+decode_func[b"7"[0]] = decode_string
+decode_func[b"8"[0]] = decode_string
+decode_func[b"9"[0]] = decode_string
 
 def bdecode(x):
     try:
@@ -75,12 +81,10 @@ def bdecode(x):
         raise BTFailure("invalid bencoded value (data after valid prefix)")
     return r
 
-from types import StringType, IntType, LongType, DictType, ListType, TupleType
-
 
 class Bencached(object):
 
-    __slots__ = ['bencoded']
+    __slots__ = ["bencoded"]
 
     def __init__(self, s):
         self.bencoded = s
@@ -89,7 +93,7 @@ def encode_bencached(x,r):
     r.append(x.bencoded)
 
 def encode_int(x, r):
-    r.extend(('i', str(x), 'e'))
+    r.extend((b"i", str(x).encode("latin-1"), b"e"))
 
 def encode_bool(x, r):
     if x:
@@ -97,40 +101,39 @@ def encode_bool(x, r):
     else:
         encode_int(0, r)
         
-def encode_string(x, r):
-    r.extend((str(len(x)), ':', x))
+def encode_bytes(x, r):
+    length_prefix = str(len(x)).encode("latin-1")
+    r.extend((length_prefix, b":", x))
 
 def encode_list(x, r):
-    r.append('l')
+    r.append(b"l")
     for i in x:
         encode_func[type(i)](i, r)
-    r.append('e')
+    r.append(b"e")
 
 def encode_dict(x,r):
-    r.append('d')
-    for k, v in x.iteritems():
-        assert isinstance(k, basestring), k
+    r.append(b"d")
+    for k, v in x.items():
+        assert isinstance(k, str), k
         encode_func[type(k)](k, r)
         encode_func[type(v)](v, r)
-    r.append('e')
+    r.append(b"e")
 
 encode_func = {}
-encode_func[Bencached] = encode_bencached
-encode_func[IntType] = encode_int
-encode_func[LongType] = encode_int
-encode_func[StringType] = encode_string
-encode_func[ListType] = encode_list
-encode_func[TupleType] = encode_list
-encode_func[DictType] = encode_dict
+encode_func[Bencached]   = encode_bencached
+encode_func[int]         = encode_int
+encode_func[bytes]       = encode_bytes
+encode_func[list]        = encode_list
+encode_func[tuple]       = encode_list
+encode_func[dict]        = encode_dict
 encode_func[OrderedDict] = encode_dict
 
 try:
-    from types import BooleanType
-    encode_func[BooleanType] = encode_bool
+    encode_func[bool] = encode_bool
 except ImportError:
     pass
 
 def bencode(x):
     r = []
     encode_func[type(x)](x, r)
-    return ''.join(r)
+    return b"".join(r)
