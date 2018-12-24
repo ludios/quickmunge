@@ -11,4 +11,4 @@ def sizeof_fmt(num):
 
 for line in sys.stdin:
 	size = int(line.strip())
-	print sizeof_fmt(size)
+	print(sizeof_fmt(size))
