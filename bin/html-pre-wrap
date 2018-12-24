@@ -1,11 +1,11 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 import sys
 
-print """\
-<div style="white-space: pre-wrap">"""
+print("""\
+<div style="white-space: pre-wrap">""")
 
-print sys.stdin.read()
+print(sys.stdin.read())
 
-print """\
-</div>"""
+print("""\
+</div>""")
