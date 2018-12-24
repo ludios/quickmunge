@@ -1,7 +1,0 @@
-#!/usr/bin/python -B
-
-import sys
-
-for line in sys.stdin:
-	lowered = line.decode("utf-8").lower()
-	sys.stdout.write(lowered.encode("utf-8"))

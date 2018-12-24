@@ -1,7 +1,0 @@
-#!/usr/bin/python -B
-
-import sys
-
-for line in sys.stdin:
-	uppered = line.decode("utf-8").upper()
-	sys.stdout.write(uppered.encode("utf-8"))
