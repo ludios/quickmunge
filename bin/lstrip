@@ -1,6 +1,6 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 import sys
 
 for line in sys.stdin:
-	print line.lstrip()
+	print(line.lstrip())
