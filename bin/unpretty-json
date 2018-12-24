@@ -8,4 +8,4 @@ import sys
 import json
 
 j = json.load(sys.stdin)
-json.dump(j, sys.stdout)
+json.dump(j, sys.stdout, separators=(',', ':'))
