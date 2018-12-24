@@ -1,9 +1,9 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 import sys
 
-sum_col    = int(sys.argv[1])       # which column to sum
-group_cols = map(int, sys.argv[2:]) # which column(s) to use as unique id
+sum_col    = int(sys.argv[1])             # which column to sum
+group_cols = list(map(int, sys.argv[2:])) # which column(s) to use as unique id
 
 last_group = []
 last_total = 0
@@ -16,7 +16,7 @@ for line in sys.stdin:
 
 	if group != last_group:
 		if last_group != []:
-			print "\t".join(last_group + [str(last_total)])
+			print("\t".join(last_group + [str(last_total)]))
 		last_group = group
 		last_total = 0
 
@@ -25,4 +25,4 @@ for line in sys.stdin:
 	except ValueError:
 		last_total += float(cols[sum_col])
 
-print "\t".join(last_group + [str(last_total)])
+print("\t".join(last_group + [str(last_total)]))
