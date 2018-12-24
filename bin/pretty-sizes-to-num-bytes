@@ -1,4 +1,4 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 import re
 import sys
@@ -18,7 +18,9 @@ for line in sys.stdin:
 		mult = 1024 * 1024 * 1024 * 1024
 	elif s.endswith("P") or s.endswith("PB"):
 		mult = 1024 * 1024 * 1024 * 1024 * 1024
+	elif s.endswith("E") or s.endswith("EB"):
+		mult = 1024 * 1024 * 1024 * 1024 * 1024 * 1024
 	if "." in s:
-		print int(float(re.findall("^[0-9\.]+", s)[0]) * mult)
+		print int(float(re.findall(r"^[0-9\.]+", s)[0]) * mult)
 	else:
 		print int(re.findall("^[0-9]+", s)[0]) * mult
