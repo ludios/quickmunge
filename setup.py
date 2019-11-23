@@ -5,7 +5,7 @@ import glob
 
 setup(
 	name="quickmunge",
-	version="2.0.0",
+	version="2.1.0",
 	description="Utilities for munging data",
 	packages=["quickmunge"],
 	scripts=glob.glob("bin/*"),
