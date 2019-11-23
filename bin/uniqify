@@ -1,15 +1,11 @@
 #!/usr/bin/python3 -B
 
-"""
-A much faster `sort -u`
-"""
-
 import sys
 
 s = set()
 
 for line in sys.stdin:
-	s.add(line.rstrip("\r\n"))
-
-for item in s:
-	print(item)
+	item = line.rstrip("\r\n")
+	if item not in s:
+		print(item)
+		s.add(item)
