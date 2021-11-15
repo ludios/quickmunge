@@ -1,11 +1,13 @@
 #!/usr/bin/python3 -B
 
 import sys
+_write = sys.stdout.buffer.write
 
 s = set()
 
-for line in sys.stdin:
-	item = line.rstrip("\r\n")
+for line in sys.stdin.buffer:
+	item = line.rstrip(b"\r\n")
 	if item not in s:
-		print(item)
+		_write(item)
+		_write(b"\n")
 		s.add(item)
