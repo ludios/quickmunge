@@ -27,10 +27,11 @@ def fix_wrong_string(s):
 		return s
 
 bt_backup_dir = sys.argv[1]
-hashes = set(p.split(".", 1)[0]
-             for p in os.listdir(bt_backup_dir)
-             if p.endswith(".torrent") or
-			    p.endswith(".fastresume"))
+hashes = set(
+	p.split(".", 1)[0]
+	for p in os.listdir(bt_backup_dir)
+	if p.endswith(".torrent") or p.endswith(".fastresume")
+)
 for h in hashes:
 	print(f"# {h}")
 	torrent_file    = f"{bt_backup_dir}/{h}.torrent"
