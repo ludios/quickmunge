@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+
+"""
+Print all file paths for all torrents loaded in a qBittorrent client.
+Prints "# infohash" before each set of filenames.
+
+Takes one argument: a path to a qBittorrent BT_backup/ directory.
+"""
+
+import os
+import re
+import sys
+from quickmunge import bencode
+
+REPLACE_RE = re.compile('\ufffd..')
+
+# Our bencode library intentionally assumes everything as latin-1, but the filenames are not
+def fix_wrong_string(s):
+	try:
+		return bytes(s, "iso-8859-1").decode("utf-8")
+	except UnicodeDecodeError:
+		# qBittorrent's handling of "Celestaphone - To Cite Fright - 06 Le Id\xe9e.mp3"
+		# is to turn it into        "Celestaphone - To Cite Fright - 06 Le Id_mp3",
+		# so we try to do that too.
+		s = bytes(s, "iso-8859-1").decode("utf-8", "replace")
+		s = re.sub(REPLACE_RE, "_", s)
+		return s
+
+bt_backup_dir = sys.argv[1]
+hashes = set(p.split(".", 1)[0]
+             for p in os.listdir(bt_backup_dir)
+             if p.endswith(".torrent") or
+			    p.endswith(".fastresume"))
+for h in hashes:
+	print(f"# {h}")
+	torrent_file    = f"{bt_backup_dir}/{h}.torrent"
+	fastresume_file = f"{bt_backup_dir}/{h}.fastresume"
+	with open(torrent_file, "rb") as f:
+		torrent = bencode.bdecode(f.read())
+	del f
+	with open(fastresume_file, "rb") as f:
+		fastresume = bencode.bdecode(f.read())
+	del f
+	save_path = fix_wrong_string(fastresume["qBt-savePath"])
+	if not save_path.endswith("/"):
+		save_path += "/"
+	has_multiple_files = "files" in torrent["info"]
+	name = fix_wrong_string(torrent["info"]["name"])
+	assert not name.endswith("/"), name
+	if has_multiple_files:
+		for f in torrent["info"]["files"]:
+			path_segments = f["path"]
+			assert len(path_segments) >= 1, path_segments
+			path = fix_wrong_string("/".join(path_segments))
+			print(f"{save_path}{name}/{path}")
+	else:
+		print(f'{save_path}{name}')
