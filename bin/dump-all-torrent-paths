@@ -14,7 +14,7 @@ from quickmunge import bencode
 
 REPLACE_RE = re.compile('\ufffd..')
 
-# Our bencode library intentionally assumes everything as latin-1, but the filenames are not
+# Our bencode library intentionally decodes everything as latin-1, but the filenames are not
 def fix_wrong_string(s):
 	try:
 		return bytes(s, "iso-8859-1").decode("utf-8")
